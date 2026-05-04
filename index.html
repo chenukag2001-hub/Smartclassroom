@@ -6,6 +6,8 @@
 <title>Smart Classroom IoT Network | 25-26J-024</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');</script>
 <style>
 :root{
   --bg:#060a12;
@@ -277,7 +279,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
     </div>
     <div class="hero-stats">
       <div class="stat-item"><div class="stat-num">84%</div><div class="stat-label">Accuracy</div></div>
-      <div class="stat-item"><div class="stat-num">&lt;5ms</div><div class="stat-label">Latency</div></div>
+      <div class="stat-item"><div class="stat-num">87ms</div><div class="stat-label">Auth Latency</div></div>
       <div class="stat-item"><div class="stat-num">358K×</div><div class="stat-label">Bandwidth Reduction</div></div>
       <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Integrated Components</div></div>
     </div>
@@ -320,17 +322,17 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
     <div class="domain-block wide reveal">
       <h3>Methodology</h3>
       <h4>How We Built It</h4>
-      <p>IoT sensors (ESP32, NFC/RFID, IP cameras, biometric and environmental sensors) collect multi-modal data at the physical layer. Edge gateways (Raspberry Pi) apply lightweight deep learning models (TensorFlow Lite, DeepFace, OpenCV) locally — stripping raw footage and retaining only anonymized emotion metadata using differential privacy (ε=1.3). An SDN controller (Ryu + OpenFlow v1.3) dynamically manages traffic and QoS. A localized blockchain ledger (Hyperledger Fabric / Python Flask) performs sub-2ms device identity verification. Aggregated anonymized summaries are transmitted via MQTT over TLS to a Flask-based cloud dashboard accessible to educators.</p>
+      <p>IoT sensors (ESP32, MFRC522 RFID, DHT22, MQ-7, sound sensor) collect multi-modal environmental and attendance data at the physical layer. Edge processing runs directly on student endpoint devices — lightweight deep learning models (TensorFlow 2.17, DeepFace, OpenCV) perform local emotion and engagement inference, retaining only anonymized engagement statistics using Laplace differential privacy (ε=1.3) with 100% frame deletion before any data leaves the device. An SDN controller (Ryu + OpenFlow 1.3) manages campus network traffic using Logistic Regression flow classification to enforce DSCP-based QoS. A localized custom blockchain ledger (Python/Flask, SHA-256) performs Zero Trust device identity verification at 6.2ms median query latency. Anonymised engagement summaries are transmitted via HTTP POST to a Flask/SQLite educator dashboard.</p>
       <div class="tag-row">
-        <span class="tag blue">ESP32 &amp; Raspberry Pi</span>
-        <span class="tag blue">MQTT / TLS</span>
-        <span class="tag blue">TensorFlow Lite</span>
+        <span class="tag blue">ESP32 &amp; MFRC522</span>
+        <span class="tag blue">HTTP POST</span>
+        <span class="tag blue">TensorFlow 2.17</span>
         <span class="tag blue">DeepFace / OpenCV</span>
         <span class="tag">Ryu SDN + OpenFlow 1.3</span>
         <span class="tag">Open vSwitch (OVS)</span>
-        <span class="tag green">Hyperledger Fabric</span>
+        <span class="tag green">Custom Python/Flask Blockchain</span>
         <span class="tag green">Differential Privacy ε=1.3</span>
-        <span class="tag green">Flask Dashboard</span>
+        <span class="tag green">Flask / SQLite Dashboard</span>
       </div>
     </div>
   </div>
@@ -350,17 +352,17 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
         <div class="layer-num">1</div>
         <div class="layer-info">
           <h4>Physical Layer</h4>
-          <p>NFC readers, IP cameras, ESP32 boards, biometric & environmental sensors (DHT11, CO₂, light, noise)</p>
+          <p>ESP32 microcontroller with DHT22 (temp/humidity), MQ-7 (carbon monoxide), MFRC522 RFID reader, and sound sensor for environmental and attendance data acquisition</p>
         </div>
-        <div class="layer-tags"><span class="tag blue">ESP32</span><span class="tag blue">NFC/RFID</span></div>
+        <div class="layer-tags"><span class="tag blue">ESP32</span><span class="tag blue">RFID</span></div>
       </div>
       <div class="arch-layer">
         <div class="layer-num">2</div>
         <div class="layer-info">
           <h4>Edge Processing Layer</h4>
-          <p>Raspberry Pi edge gateway handles local AI inference, privacy filtering, and packet prioritization</p>
+          <p>Student endpoint devices run TensorFlow 2.17/DeepFace engagement inference locally — all biometric processing stays on-device with 100% frame deletion before any data crosses the network boundary</p>
         </div>
-        <div class="layer-tags"><span class="tag">RPi</span><span class="tag">TFLite</span></div>
+        <div class="layer-tags"><span class="tag">TF 2.17</span><span class="tag">DeepFace</span></div>
       </div>
       <div class="arch-layer">
         <div class="layer-num">3</div>
@@ -374,7 +376,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
         <div class="layer-num">4</div>
         <div class="layer-info">
           <h4>Security Layer</h4>
-          <p>Localized blockchain ledger with SHA-256 block linking for Zero Trust device authentication (&lt;2ms query)</p>
+          <p>Custom Python/Flask blockchain with SHA-256 block linking for Zero Trust device authentication — 6.2ms median query latency, 100% tamper detection, offline resilient</p>
         </div>
         <div class="layer-tags"><span class="tag green">Blockchain</span><span class="tag green">ZTA</span></div>
       </div>
@@ -392,8 +394,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
       <div class="perf-grid" style="grid-template-columns:1fr 1fr;margin-bottom:20px">
         <div class="perf-card blue">
           <span class="perf-icon"><i class="fa-solid fa-bolt"></i></span>
-          <div class="perf-val">&lt;5ms</div>
-          <div class="perf-label">End-to-End Latency</div>
+          <div class="perf-val">87ms</div>
+          <div class="perf-label">Auth Latency</div>
         </div>
         <div class="perf-card green">
           <span class="perf-icon"><i class="fa-solid fa-bullseye"></i></span>
@@ -417,7 +419,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
           <li>100% frame deletion rate — 2,608 frames processed with zero biometric reconstruction risk</li>
           <li>0.20 Kbps per student vs. 72,000 Kbps for equivalent video streaming</li>
           <li>100 concurrent students consuming only 20 Kbps aggregate bandwidth</li>
-          <li>Blockchain device identity verification at &lt;2ms query time</li>
+          <li>Blockchain device identity verification at 6.2ms median query latency, 847 queries/sec throughput</li>
           <li>Multi-modal fusion: emotion (40%) + head movement (30%) + visibility (30%)</li>
         </ul>
       </div>
@@ -562,21 +564,49 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
           <td>Proposal</td>
           <td>Group</td>
           <td><span class="doc-status available"><i class="fa-solid fa-circle-check"></i> Available</span></td>
-          <td><a href="#" class="doc-link"><i class="fa-solid fa-arrow-down"></i> View</a></td>
+          <td><a href="docs/TAF.pdf" download class="doc-link"><i class="fa-solid fa-arrow-down"></i> Download</a></td>
         </tr>
         <tr>
           <td>Research Proposal Document</td>
           <td>Proposal</td>
           <td>Group</td>
           <td><span class="doc-status available"><i class="fa-solid fa-circle-check"></i> Available</span></td>
-          <td><a href="#" class="doc-link"><i class="fa-solid fa-arrow-down"></i> View</a></td>
+          <td><a href="docs/Research_Proposal.pdf" download class="doc-link"><i class="fa-solid fa-arrow-down"></i> Download</a></td>
         </tr>
         <tr>
-          <td>Final Combined Research Document</td>
+          <td>Individual Thesis — Karunathilake A.V.G.H.H. (IT22078278)</td>
+          <td>Individual Report</td>
+          <td>A.V.G.H.H. Karunathilake</td>
+          <td><span class="doc-status available"><i class="fa-solid fa-circle-check"></i> Available</span></td>
+          <td><a href="docs/Thesis_Karunathilake.pdf" download class="doc-link"><i class="fa-solid fa-arrow-down"></i> Download</a></td>
+        </tr>
+        <tr>
+          <td>Individual Thesis — Gunasena C.B. (IT22365132)</td>
+          <td>Individual Report</td>
+          <td>C.B. Gunasena</td>
+          <td><span class="doc-status available"><i class="fa-solid fa-circle-check"></i> Available</span></td>
+          <td><a href="docs/Thesis_Gunasena.pdf" download class="doc-link"><i class="fa-solid fa-arrow-down"></i> Download</a></td>
+        </tr>
+        <tr>
+          <td>Individual Thesis — Abeynayake D.W.A.I. (IT22073228)</td>
+          <td>Individual Report</td>
+          <td>D.W.A.I. Abeynayake</td>
+          <td><span class="doc-status available"><i class="fa-solid fa-circle-check"></i> Available</span></td>
+          <td><a href="docs/Thesis_Abeynayake.pdf" download class="doc-link"><i class="fa-solid fa-arrow-down"></i> Download</a></td>
+        </tr>
+        <tr>
+          <td>Individual Thesis — Bamunuarachchi S.S. (IT22132000)</td>
+          <td>Individual Report</td>
+          <td>S.S. Bamunuarachchi</td>
+          <td><span class="doc-status available"><i class="fa-solid fa-circle-check"></i> Available</span></td>
+          <td><a href="docs/Thesis_Bamunuarachchi.pdf" download class="doc-link"><i class="fa-solid fa-arrow-down"></i> Download</a></td>
+        </tr>
+        <tr>
+          <td>Final Combined Group Report</td>
           <td>Final Report</td>
           <td>Group</td>
-          <td><span class="doc-status pending"><i class="fa-solid fa-clock"></i> Pending</span></td>
-          <td><span style="color:var(--muted);font-size:13px">—</span></td>
+          <td><span class="doc-status available"><i class="fa-solid fa-circle-check"></i> Available</span></td>
+          <td><a href="docs/Final_Combined_Report.pdf" download class="doc-link"><i class="fa-solid fa-arrow-down"></i> Download</a></td>
         </tr>
       </tbody>
     </table>
@@ -604,8 +634,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
         <p>Introduction, research problem, objectives, and initial methodology overview.</p>
       </div>
       <div class="slide-actions">
-        <a href="#" class="slide-btn primary">View Slides</a>
-        <a href="#" class="slide-btn ghost">Download</a>
+        <a href="slides/Proposal_Presentation.pptx" target="_blank" class="slide-btn primary">View Slides</a>
+        <a href="slides/Proposal_Presentation.pptx" download class="slide-btn ghost">Download</a>
       </div>
     </div>
 
@@ -621,8 +651,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
         <p>Literature review, research gap analysis, architecture design, and early prototypes.</p>
       </div>
       <div class="slide-actions">
-        <a href="#" class="slide-btn primary">View Slides</a>
-        <a href="#" class="slide-btn ghost">Download</a>
+        <a href="slides/Progress_Presentation_1.pptx" target="_blank" class="slide-btn primary">View Slides</a>
+        <a href="slides/Progress_Presentation_1.pptx" download class="slide-btn ghost">Download</a>
       </div>
     </div>
 
@@ -638,8 +668,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
         <p>Full system integration, experimental results, and performance benchmarks.</p>
       </div>
       <div class="slide-actions">
-        <a href="#" class="slide-btn primary">View Slides</a>
-        <a href="#" class="slide-btn ghost">Download</a>
+        <a href="slides/Progress_Presentation_2.pptx" target="_blank" class="slide-btn primary">View Slides</a>
+        <a href="slides/Progress_Presentation_2.pptx" download class="slide-btn ghost">Download</a>
       </div>
     </div>
 
@@ -676,8 +706,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
       <div class="team-avatar" style="background:linear-gradient(135deg,#00c6ff,#0090c9)">KA</div>
       <div class="team-name">Karunathilake A.V.G.H.H.</div>
       <div class="team-id">IT22078278</div>
-      <span class="team-role" style="background:rgba(0,198,255,0.1);color:var(--accent);border:1px solid rgba(0,198,255,0.2)">SDN & Emotion Recognition</span>
-      <div class="team-desc">Develops a privacy-preserving emotion recognition system using classroom cameras — detecting facial expressions and classifying moods using edge AI, sending only anonymized emotion metadata to the cloud.</div>
+      <span class="team-role" style="background:rgba(0,198,255,0.1);color:var(--accent);border:1px solid rgba(0,198,255,0.2)">SDN Traffic Classification & QoS</span>
+      <div class="team-desc">Designs and implements an intelligent SDN-based traffic management system using Logistic Regression flow classification to distinguish academic from non-academic network traffic in real time. Enforces DSCP prioritization and meter-based rate limiting via Ryu and OpenFlow 1.3 without payload inspection, preserving user privacy while improving educational application performance.</div>
       <div class="team-contact">
         <a href="mailto:IT22078278@my.sliit.lk" class="team-email"><i class="fa-solid fa-envelope"></i> IT22078278@my.sliit.lk</a>
       </div>
@@ -687,8 +717,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
       <div class="team-avatar" style="background:linear-gradient(135deg,#00e5a0,#00a06e)">DW</div>
       <div class="team-name">Abeynayake D.W.A.I.</div>
       <div class="team-id">IT22073228</div>
-      <span class="team-role" style="background:rgba(0,229,160,0.08);color:var(--accent3);border:1px solid rgba(0,229,160,0.2)">Edge AI & Environmental IoT</span>
-      <div class="team-desc">Builds a real-time monitoring system using environmental sensors (CO₂, noise, temperature, light) with edge-logic anomaly detection. Implements differential privacy (ε=1.3) achieving 358,293× bandwidth reduction.</div>
+      <span class="team-role" style="background:rgba(0,229,160,0.08);color:var(--accent3);border:1px solid rgba(0,229,160,0.2)">Privacy-Preserving Engagement Monitoring</span>
+      <div class="team-desc">Designs and implements a three-layer edge AI engagement monitoring system using DeepFace and OpenCV exclusively on student endpoint devices. Applies Laplace differential privacy (ε=1.3) to 30-second aggregation windows with 100% frame deletion — achieving 84% engagement accuracy and a 358,293× bandwidth reduction vs. video streaming, with full GDPR-compliant biometric data protection.</div>
       <div class="team-contact">
         <a href="mailto:IT22073228@my.sliit.lk" class="team-email"><i class="fa-solid fa-envelope"></i> IT22073228@my.sliit.lk</a>
       </div>
@@ -698,8 +728,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
       <div class="team-avatar" style="background:linear-gradient(135deg,#7b5ea7,#4a3070)">SS</div>
       <div class="team-name">Bamunuarachchi S.S.</div>
       <div class="team-id">IT22132000</div>
-      <span class="team-role" style="background:rgba(123,94,167,0.1);color:#b49fd8;border:1px solid rgba(123,94,167,0.25)">IoT & NFC Attendance</span>
-      <div class="team-desc">Builds an NFC-based system for secure, real-time attendance and behavioral tracking — recording entry/exit patterns, supporting offline operation with automated cloud sync, and generating behavioral heatmaps.</div>
+      <span class="team-role" style="background:rgba(123,94,167,0.1);color:#b49fd8;border:1px solid rgba(123,94,167,0.25)">IoT Environmental Monitoring & Attendance</span>
+      <div class="team-desc">Designs and implements an adaptive IoT-based monitoring system integrating NFC-based attendance, environmental sensing (temperature, humidity, light, noise, air quality), and reinforcement learning–driven middleware. The system enables real-time data collection, offline-first operation with intelligent cloud synchronization, and context-aware behavioral insights such as attendance patterns, environmental impact analysis, and classroom activity heatmaps.</div>
       <div class="team-contact">
         <a href="mailto:IT22132000@my.sliit.lk" class="team-email"><i class="fa-solid fa-envelope"></i> IT22132000@my.sliit.lk</a>
       </div>
@@ -709,8 +739,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
       <div class="team-avatar" style="background:linear-gradient(135deg,#ff6b6b,#c0392b)">CB</div>
       <div class="team-name">Gunasena C.B.</div>
       <div class="team-id">IT22365132</div>
-      <span class="team-role" style="background:rgba(255,107,107,0.08);color:#ff9a9a;border:1px solid rgba(255,107,107,0.2)">Blockchain & Security</span>
-      <div class="team-desc">Designs a camera-based stress detection system using posture and motion tracking (MediaPipe/OpenPose) with blockchain Zero Trust authentication. Achieves sub-2ms device identity verification via localized ledger.</div>
+      <span class="team-role" style="background:rgba(255,107,107,0.08);color:#ff9a9a;border:1px solid rgba(255,107,107,0.2)">Decentralized Zero Trust Network Access</span>
+      <div class="team-desc">Designs and implements a three-layer DZTNA system combining a custom SHA-256 blockchain ledger for tamper-proof device identity management, Ryu-Blockchain middleware enforcing Zero Trust Implicit Deny access control via OpenFlow, and a TensorFlow Lite anomaly detection model achieving 0.922 macro F1-score across seven attack categories — operating fully offline without cloud dependencies.</div>
       <div class="team-contact">
         <a href="mailto:IT22365132@my.sliit.lk" class="team-email"><i class="fa-solid fa-envelope"></i> IT22365132@my.sliit.lk</a>
       </div>
@@ -790,21 +820,22 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
     <div class="contact-form reveal reveal-d2">
       <div class="form-group">
         <label>Your Name</label>
-        <input type="text" placeholder="Full name">
+        <input id="contact-name" type="text" placeholder="Full name">
       </div>
       <div class="form-group">
         <label>Email Address</label>
-        <input type="email" placeholder="you@example.com">
+        <input id="contact-email" type="email" placeholder="you@example.com">
       </div>
       <div class="form-group">
         <label>Subject</label>
-        <input type="text" placeholder="Research inquiry, collaboration…">
+        <input id="contact-subject" type="text" placeholder="Research inquiry, collaboration…">
       </div>
       <div class="form-group">
         <label>Message</label>
-        <textarea placeholder="Your message here…"></textarea>
+        <textarea id="contact-message" placeholder="Your message here…"></textarea>
       </div>
       <button class="form-submit" onclick="handleSubmit(this)">Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i></button>
+      <p id="form-status" style="margin-top:12px;font-size:13px;text-align:center;display:none"></p>
     </div>
   </div>
 </section>
@@ -852,14 +883,54 @@ function toggleMs(header) {
   }
 }
 
-// Form submit
-function handleSubmit(btn) {
-  btn.textContent = 'Message Sent! ✓'
-  btn.style.background = 'linear-gradient(135deg,var(--accent3),#00a06e)'
-  setTimeout(() => {
-    btn.innerHTML = 'Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i>'
-    btn.style.background = ''
-  }, 3000)
+// Contact form — EmailJS
+async function handleSubmit(btn) {
+  const name    = document.getElementById('contact-name').value.trim();
+  const email   = document.getElementById('contact-email').value.trim();
+  const subject = document.getElementById('contact-subject').value.trim();
+  const message = document.getElementById('contact-message').value.trim();
+  const status  = document.getElementById('form-status');
+
+  if (!name || !email || !message) {
+    status.style.display = 'block';
+    status.style.color = '#ffc107';
+    status.textContent = 'Please fill in your name, email, and message.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = 'Sending… <i class="fa-solid fa-spinner fa-spin"></i>';
+
+  try {
+    await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+      from_name:    name,
+      from_email:   email,
+      subject:      subject || 'Smart Classroom Website Enquiry',
+      message:      message,
+      to_email:     'chenukag2001@gmail.com'
+    });
+    btn.innerHTML = 'Message Sent! ✓';
+    btn.style.background = 'linear-gradient(135deg,var(--accent3),#00a06e)';
+    status.style.display = 'block';
+    status.style.color = 'var(--accent3)';
+    status.textContent = 'Thank you! We\'ll get back to you soon.';
+    document.getElementById('contact-name').value = '';
+    document.getElementById('contact-email').value = '';
+    document.getElementById('contact-subject').value = '';
+    document.getElementById('contact-message').value = '';
+    setTimeout(() => {
+      btn.innerHTML = 'Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i>';
+      btn.style.background = '';
+      btn.disabled = false;
+      status.style.display = 'none';
+    }, 4000);
+  } catch (err) {
+    btn.innerHTML = 'Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i>';
+    btn.disabled = false;
+    status.style.display = 'block';
+    status.style.color = '#ff6b6b';
+    status.textContent = 'Failed to send. Please email us directly at chenukag2001@gmail.com';
+  }
 }
 </script>
 </body>
